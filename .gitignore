@@ -1,0 +1,6 @@
+# Ignore everything by default
+*
+
+# Track only the idea backlog app
+!.gitignore
+!ideas.html

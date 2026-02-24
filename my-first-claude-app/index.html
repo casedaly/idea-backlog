@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idea Backlog</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="app-container">
+    <header>
+      <h1>💡 Idea Backlog</h1>
+      <p class="subtitle">Capture ideas before they slip away</p>
+    </header>
+
+    <!-- Idea Input Area -->
+    <section class="input-section">
+      <div class="input-row">
+        <textarea
+          id="idea-input"
+          placeholder="What's your idea?"
+          rows="3"
+        ></textarea>
+        <button id="voice-btn" class="btn-voice" title="Voice to Text">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+      </div>
+      <div id="voice-status" class="voice-status hidden">Listening...</div>
+      <button id="add-btn" class="btn-primary">Add Idea</button>
+    </section>
+
+    <!-- Idea List -->
+    <section class="list-section">
+      <div class="list-header">
+        <h2>Active Ideas <span id="count-badge" class="badge">0</span></h2>
+      </div>
+      <ul id="idea-list" class="idea-list">
+        <li class="empty-state">No ideas yet. Add your first one above!</li>
+      </ul>
+    </section>
+
+    <!-- Archive -->
+    <section class="archive-section" id="archive-section">
+      <button class="archive-toggle" id="archive-toggle">
+        Archived Ideas <span id="archive-badge" class="badge badge-muted">0</span>
+        <span class="toggle-arrow">▾</span>
+      </button>
+      <ul id="archive-list" class="idea-list archive-list hidden"></ul>
+    </section>
+  </div>
+
+  <!-- Sub-Idea Modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Sub-Idea</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <p class="modal-parent-label">Parent idea: <em id="modal-parent-text"></em></p>
+      <input type="text" id="sub-idea-title" placeholder="Sub-idea title" />
+      <textarea id="sub-idea-details" placeholder="Details (optional)" rows="4"></textarea>
+      <div class="modal-row">
+        <button id="modal-voice-btn" class="btn-voice btn-voice-sm" title="Voice to Text">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+        <div id="modal-voice-status" class="voice-status hidden">Listening...</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="modal-cancel">Cancel</button>
+        <button class="btn-primary" id="modal-save">Save Sub-Idea</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -3,6 +3,7 @@
 
 # Track only the idea backlog app
 !.gitignore
+!index.html
 !ideas.html
 !my-first-claude-app/
 !my-first-claude-app/index.html

@@ -34,6 +34,109 @@ header h1 {
   color: #7b82a0;
 }
 
+/* ── Header Row ───────────────────────────────────────── */
+.header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+.header-row > div {
+  flex: 1;
+  text-align: center;
+}
+
+.btn-settings {
+  position: absolute;
+  right: 0;
+  top: 4px;
+  background: none;
+  border: 1.5px solid #dde1ef;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  color: #9499b7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-settings:hover { background: #eef0f8; color: #6c63ff; border-color: #6c63ff; }
+.btn-settings.active { background: #e8e6ff; color: #6c63ff; border-color: #6c63ff; }
+
+/* ── Settings Panel ───────────────────────────────────── */
+.settings-panel {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1.5px solid #e0deff;
+}
+
+.settings-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e2240;
+}
+
+.settings-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7194;
+}
+
+.settings-input {
+  border: 1.5px solid #dde1ef;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.93rem;
+  font-family: inherit;
+  color: #2d3047;
+  background: #f9fafb;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.settings-input:focus {
+  outline: none;
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
+  background: #fff;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-help-link {
+  font-size: 0.83rem;
+  color: #6c63ff;
+  text-decoration: none;
+}
+.settings-help-link:hover { text-decoration: underline; }
+
+/* ── Sheet Button ─────────────────────────────────────── */
+.btn-sheet {
+  background: #eef0fb;
+  color: #4b44cc;
+}
+.btn-sheet:hover { background: #e0deff; }
+
+.btn-sheet.logged {
+  background: #d4f5e5;
+  color: #1a8a55;
+  cursor: default;
+  pointer-events: none;
+}
+
 /* ── Input Section ────────────────────────────────────── */
 .input-section {
   background: #ffffff;

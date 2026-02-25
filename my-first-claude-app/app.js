@@ -5,6 +5,7 @@ let modalTargetId = null;
 let recognition = null;
 let isListeningMain = false;
 let isListeningModal = false;
+let sheetUrl = localStorage.getItem('idea-sheet-url') || '';
 
 /* ── DOM Refs ─────────────────────────────────────────── */
 const ideaInput       = document.getElementById('idea-input');
@@ -17,6 +18,11 @@ const archiveBadge    = document.getElementById('archive-badge');
 const archiveList     = document.getElementById('archive-list');
 const archiveToggle   = document.getElementById('archive-toggle');
 const toggleArrow     = archiveToggle.querySelector('.toggle-arrow');
+
+const settingsBtn     = document.getElementById('settings-btn');
+const settingsPanel   = document.getElementById('settings-panel');
+const sheetUrlInput   = document.getElementById('sheet-url-input');
+const settingsSaveBtn = document.getElementById('settings-save-btn');
 
 const modalOverlay    = document.getElementById('modal-overlay');
 const modalClose      = document.getElementById('modal-close');
@@ -86,6 +92,7 @@ function buildCard(idea, archived) {
     <div class="idea-actions">
       <button class="btn-action btn-sub"     data-action="sub"     data-id="${idea.id}">+ Sub-Idea</button>
       <button class="btn-action btn-archive" data-action="archive" data-id="${idea.id}">Archive</button>
+      <button class="btn-action btn-sheet"   data-action="log"     data-id="${idea.id}">Log ↗</button>
     </div>
   `;
 
@@ -141,6 +148,8 @@ document.addEventListener('click', e => {
     render();
   } else if (action === 'sub') {
     openModal(idea);
+  } else if (action === 'log') {
+    logToSheet(idea, btn);
   }
 });
 
@@ -274,6 +283,70 @@ function stopVoice(isMain) {
     isListeningModal = false;
     modalVoiceBtn.classList.remove('active');
     modalVoiceStatus.classList.add('hidden');
+  }
+}
+
+/* ── Settings ─────────────────────────────────────────── */
+sheetUrlInput.value = sheetUrl;
+
+settingsBtn.addEventListener('click', () => {
+  const open = !settingsPanel.classList.contains('hidden');
+  settingsPanel.classList.toggle('hidden', open);
+  settingsBtn.classList.toggle('active', !open);
+  if (!open) sheetUrlInput.focus();
+});
+
+settingsSaveBtn.addEventListener('click', () => {
+  sheetUrl = sheetUrlInput.value.trim();
+  localStorage.setItem('idea-sheet-url', sheetUrl);
+  settingsPanel.classList.add('hidden');
+  settingsBtn.classList.remove('active');
+});
+
+document.getElementById('settings-help-link').addEventListener('click', e => {
+  e.preventDefault();
+  alert(
+    'Setup instructions:\n\n' +
+    '1. Open script.google.com and create a new project.\n' +
+    '2. Paste the doPost script provided, then save.\n' +
+    '3. Click "Deploy" → "New deployment" → type "Web app".\n' +
+    '4. Set "Execute as" = Me, "Who has access" = Anyone.\n' +
+    '5. Click Deploy, copy the Web app URL.\n' +
+    '6. Paste that URL here and click Save.'
+  );
+});
+
+/* ── Log to Sheet ─────────────────────────────────────── */
+async function logToSheet(idea, btn) {
+  const url = localStorage.getItem('idea-sheet-url') || '';
+  if (!url) {
+    alert('Please set your Apps Script URL in Settings (⚙) first.');
+    return;
+  }
+
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  const subIdeas = (idea.subIdeas || []).map(s => s.title).join('; ');
+  const payload = {
+    timestamp: new Date(idea.timestamp).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric'
+    }),
+    text: idea.text,
+    subIdeas
+  };
+
+  try {
+    await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    btn.textContent = '✓';
+    btn.classList.add('logged');
+  } catch (err) {
+    btn.textContent = 'Log ↗';
+    btn.disabled = false;
+    alert('Failed to log idea. Check your Apps Script URL and try again.');
   }
 }
 

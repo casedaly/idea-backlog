@@ -10,9 +10,30 @@
 
   <div class="app-container">
     <header>
-      <h1>💡 Idea Backlog</h1>
-      <p class="subtitle">Capture ideas before they slip away</p>
+      <div class="header-row">
+        <div>
+          <h1>💡 Idea Backlog</h1>
+          <p class="subtitle">Capture ideas before they slip away</p>
+        </div>
+        <button id="settings-btn" class="btn-settings" title="Settings">⚙</button>
+      </div>
     </header>
+
+    <!-- Settings Panel -->
+    <section class="settings-panel hidden" id="settings-panel">
+      <h2 class="settings-title">Google Sheets Logging</h2>
+      <label class="settings-label" for="sheet-url-input">Apps Script URL</label>
+      <input
+        type="url"
+        id="sheet-url-input"
+        class="settings-input"
+        placeholder="https://script.google.com/macros/s/..."
+      />
+      <div class="settings-actions">
+        <a class="settings-help-link" href="#" id="settings-help-link">How to set this up ↗</a>
+        <button id="settings-save-btn" class="btn-primary">Save</button>
+      </div>
+    </section>
 
     <!-- Idea Input Area -->
     <section class="input-section">
